@@ -197,7 +197,7 @@ The following will delay server response by one second:
 To avoid the need to restart fake-server in order to clear the configuration, we've implemented a special endpoint called `/flush`. By sending a `DELETE` request to `http://localhost:3012/flush`, you will erase all previously configured responses.
 
 ### Configuring rest-fake-server
-The server can be configured by putting a `config.json` file in the directory where the server is started. Below is a sample configuration file.
+The server can be configured by putting a `fake-rest-server.conf` file in the directory where the server is running. Below is a sample configuration file.
 ```json
 {
   "PORT": 3000,
@@ -206,7 +206,9 @@ The server can be configured by putting a `config.json` file in the directory wh
 ```
 The `PORT` specifies the server port at which it should listen, in this case `3000`.
 
-`DEFAULT_ROUTES_PATH` specifies the folder path from where it should load the default routes. Notice that `DEFAULT_ROUTES_PATH` is a <strong>directory</strong>. You can put `JSON` files inside this directory. All the files inside this directory will get automatically loaded when `fake-rest-server` starts and will be available for use. Below is a sample `default_routes.json` file.
+`DEFAULT_ROUTES_PATH` specifies the folder path from where the server should load the routes that will be available on server start. Notice that `DEFAULT_ROUTES_PATH` is a directory. All the `.json` files inside this directory will get automatically loaded when `fake-rest-server` starts and will be ready for use.
+
+Below is a sample `default_routes.json` file.
 ```json
 {
   "routes":[

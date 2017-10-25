@@ -14,9 +14,6 @@ var FakeResponse = require('./../libs/fakeresponse.js');
 var ResponseDescBuilder = require('../libs/responseDescBuilder.js');
 var merge = require('merge');
 
-// Preload routes 
-FakeResponse.preload(argv.defaultRoutesDir || require(path.resolve('./config.json')).DEFAULT_ROUTES_PATH);
-
 var controller = {
     fakeResponse: FakeResponse, // of course this is here just so that it can be overwritten easily in the tests.
 
@@ -130,4 +127,12 @@ var controller = {
     }
 };
 
-module.exports = controller;
+module.exports = {
+    preloadRoutes: function (defaultRoutesPath) {
+        FakeResponse.preload(argv.defaultRoutesDir || defaultRoutesPath);
+    },
+
+    getController: function () {
+        return controller;
+    }
+};

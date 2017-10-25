@@ -7,15 +7,17 @@
 'use strict';
 var path = require('path');
 var argv = require('yargs').argv;
-
 var restify = require('restify');
-var server = restify.createServer();
 
+var loadConfig = require('./libs/loadConfig');
+
+var server = restify.createServer();
 server.use(restify.bodyParser());
 
-require('./routes/routes.js')(server);
+var config = loadConfig();
+require('./routes/routes.js')(server, config);
 
-const PORT = argv.port || require(path.resolve('./config.json')).PORT;
+const PORT = argv.port || config.PORT;
 
 if (module.parent) {
     module.exports = server.server;

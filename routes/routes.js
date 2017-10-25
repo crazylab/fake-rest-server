@@ -6,9 +6,12 @@
 
 'use strict';
 
-var controller = require('./controller.js');
+var controllerModule = require('./controllerModule.js');
 
-module.exports = function (server) {
+module.exports = function (server, config) {
+    controllerModule.preloadRoutes(config.DEFAULT_ROUTES_PATH);
+
+    var controller = controllerModule.getController();
     server.post('/add', controller.add);
     server.post('/remove', controller.remove); // todo: convert to delete
     server.del('/flush', controller.flush);

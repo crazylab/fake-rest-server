@@ -7,7 +7,7 @@
 /*jshint -W079 */
 'use strict';
 
-var controller = require('../routes/controller.js');
+var controller = require('../routes/controllerModule').getController();
 var sinon = require('sinon');
 var assert = require('chai').assert;
 
@@ -31,7 +31,8 @@ describe('Integration tests', function () {
 
         sinon.stub(controller.fakeResponse, 'add');
 
-        controller.add(req, res, function () {});
+        controller.add(req, res, function () {
+        });
 
         assert.isTrue(controller.fakeResponse.add.calledOnce);
         assert.isTrue(controller.fakeResponse.add.calledWith(sinon.match({
@@ -58,10 +59,13 @@ describe('Integration tests', function () {
 
         sinon.stub(controller.fakeResponse, 'flush');
 
-        controller.add(req, res, function () {});
-        controller.add(req, res, function () {});
+        controller.add(req, res, function () {
+        });
+        controller.add(req, res, function () {
+        });
 
-        controller.flush(null, res, function () {});
+        controller.flush(null, res, function () {
+        });
 
         assert.isTrue(controller.fakeResponse.flush.calledOnce);
 
@@ -94,20 +98,24 @@ describe('Integration tests', function () {
 
         controller.fakeResponse._items = responses;
 
-        controller.match(req, res, function () {});
-        res.writeHead.lastCall.calledWithExactly(200,  {'Content-Type' : 'application/json'});
+        controller.match(req, res, function () {
+        });
+        res.writeHead.lastCall.calledWithExactly(200, {'Content-Type': 'application/json'});
         res.write.lastCall.calledWithExactly('OK');
 
-        controller.match(req, res, function () {});
-        res.writeHead.lastCall.calledWithExactly(200,  {'Content-Type' : 'application/json'});
+        controller.match(req, res, function () {
+        });
+        res.writeHead.lastCall.calledWithExactly(200, {'Content-Type': 'application/json'});
         res.write.lastCall.calledWithExactly('OK');
 
-        controller.match(req, res, function () {});
-        res.writeHead.lastCall.calledWithExactly(200,  {'Content-Type' : 'application/json'});
+        controller.match(req, res, function () {
+        });
+        res.writeHead.lastCall.calledWithExactly(200, {'Content-Type': 'application/json'});
         res.write.lastCall.calledWithExactly('yay!');
 
-        controller.match(req, res, function () {});
-        res.writeHead.lastCall.calledWithExactly(200,  {'Content-Type' : 'application/json'});
+        controller.match(req, res, function () {
+        });
+        res.writeHead.lastCall.calledWithExactly(200, {'Content-Type': 'application/json'});
         res.write.lastCall.calledWithExactly('OK');
     });
 
@@ -125,7 +133,8 @@ describe('Integration tests', function () {
 
         sinon.stub(controller.fakeResponse, 'add');
 
-        controller.add(req, res, function () {});
+        controller.add(req, res, function () {
+        });
 
         assert.isTrue(controller.fakeResponse.add.calledWithMatch({
             route: '/',
@@ -156,7 +165,8 @@ describe('Integration tests', function () {
                 send: sinon.stub()
             };
 
-        controller.add(req, res, function () {});
+        controller.add(req, res, function () {
+        });
 
         controller.match({
             url: '/delayed',
