@@ -6,7 +6,7 @@ Fake-rest-server is a generic and non-intrusive tool used to mock any http serve
 
 ### How it works
 
-The idea is to create a webserver listening in a different port and make your tests bring it up and configure how it should behave against each different request. "Configuration" can be done by posting the parameters and desired response to the server, or through configuration files inside ./default_routes/.
+The idea is to create a webserver listening in a different port and make your tests bring it up and configure how it should behave against each different request. "Configuration" can be done by posting the parameters and desired response to the server, or through configuration files inside `./default_routes/`.
 
 For every request, fake-server will try to match against the configured URIs and return the expected response.
 
@@ -31,13 +31,13 @@ $ cd fake-server
 $ npm install
 $ npm start
 ```
-The server will start at http://localhost:3012
+The server will start at `http://localhost:3012`. To configure the server, see the [Server Configuration](#server-configuration) section.
 
 ### Quickstart (two really basic scenarios)
-Let's say you want "/test"  to always return "hello" and "/foo" to return a 404. 
+Let's say you want `/test`  to always return "hello" and `/foo` to return a 404. 
 
 ##### Add Endpoint
-All you have to do is `POST` to `http://localhost:3012/add` the following data:
+All you have to do is `POST` to `http://localhost:3012/__add` the following data:
 
 Configure `/test` by posting:
 ```json
@@ -50,7 +50,7 @@ Configure `/test` by posting:
 
 one of the many ways to do this is using cURL:
 ```
-curl http://localhost:3012/add -X POST -H "Content-Type:application/json" -H "Accept:application/json"  -d '{"route":"/test","responseCode":200,"responseBody":"hello"}' 
+curl http://localhost:3012/__add -X POST -H "Content-Type:application/json" -H "Accept:application/json"  -d '{"route":"/test","responseCode":200,"responseBody":"hello"}' 
 ```
 
 now let's configure our `404` example by sending this to the server:
@@ -64,7 +64,7 @@ now let's configure our `404` example by sending this to the server:
 
 using cURL:
 ``` 
-curl http://localhost:3012/add -X POST -H "Content-Type:application/json" -H "Accept:application/json" -d '{"route":"/foo","responseCode":404,"responseBody":"Not found"}' 
+curl http://localhost:3012/__add -X POST -H "Content-Type:application/json" -H "Accept:application/json" -d '{"route":"/foo","responseCode":404,"responseBody":"Not found"}' 
 ```
 
 now, in your browser you can see the results:
@@ -75,7 +75,7 @@ now, in your browser you can see the results:
 ##### Remove Endpoint
 It is always a good practice to remove the the configured endpoint in the `teardown` method of your test.
 
-You can remove the previously added `404` example configuration by sending a `POST` request to `http://localhost:3012/remove` with the same configuration json:
+You can remove the previously added `404` example configuration by sending a `POST` request to `http://localhost:3012/__remove` with the same configuration json:
 ```json
  {
    "route": "/foo",
@@ -87,7 +87,7 @@ This will remove `/foo` endpoint. If there are multiple `foo` endpoint configure
 
 ### What else can fake-server do?
 
-Configuration is done by sending a `POST` request to `/add` or by placing a JSON file containing configurations inside a "routes" object (see `default_routes/sample.json` for reference). Here are the supported features for this version:
+Configuration is done by sending a `POST` request to `/__add` or by placing a JSON file containing configurations inside a "routes" object (see [example](#server-configuration) below for reference). Here are the supported features for this version:
 
 ##### Routes can be RegEx
 
@@ -194,9 +194,9 @@ The following will delay server response by one second:
 
 ##### Resetting server configuration
 
-To avoid the need to restart fake-server in order to clear the configuration, we've implemented a special endpoint called `/flush`. By sending a `DELETE` request to `http://localhost:3012/flush`, you will erase all previously configured responses.
+To avoid the need to restart fake-server in order to clear the configuration, we've implemented a special endpoint called `/__flush`. By sending a `DELETE` request to `http://localhost:3012/__flush`, you will erase all previously configured responses.
 
-### Configuring rest-fake-server
+### Server Configuration
 The server can be configured by putting a `fake-rest-server.conf` file in the directory where the server is running. Below is a sample configuration file.
 ```json
 {
@@ -236,5 +236,5 @@ Notice that it is same as any other configuration that we have previously seen. 
 
 
 ### Limitations
-- There are three reserved endpoints: `POST` `/add`, `/remove` and  `DELETE` `/flush`. These cannot be used by your application.
+- There are three reserved endpoints: `POST` `/__add`, `DELETE` `/__remove` and `/__flush`. These cannot be used by your application. Puting `__` before endpoint names defines these are reserved endpoint. This gives you easily use those names in your server as `/add` or `/remove` or `/flush`.
 - Does not supports `https` connections, yet.

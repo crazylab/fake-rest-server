@@ -18,7 +18,7 @@ var controller = {
     fakeResponse: FakeResponse, // of course this is here just so that it can be overwritten easily in the tests.
 
     add: function (req, res, next) {
-        console.log('INFO: add :: ' + req.params.route);
+        console.log('INFO: Adding route :: ' + req.params.route);
 
         var responseDesc = new ResponseDescBuilder(req.params.route)
             .withQueryParams(req.params.queryParams)
@@ -38,7 +38,7 @@ var controller = {
     },
 
     match: function (req, res, next) {
-        console.log('INFO: match :: ' + req.url);
+        console.log('INFO: Matching route :: ' + req.url);
 
         function send(statusCode, responseHeaders, responseBody) {
             var contentTypeApplicationJson = {"Content-Type": "application/json"};
@@ -99,7 +99,7 @@ var controller = {
     },
 
     remove: function (req, res, next) {
-        console.log('INFO: remove :: ' + req.params.route);
+        console.log('INFO: Removing route :: ' + req.params.route);
 
         var uri = req.params.route;
         if (req.params.queryParams) {
@@ -119,7 +119,7 @@ var controller = {
     },
 
     flush: function (req, res, next) {
-        console.log('INFO: flush :: ');
+        console.log('INFO: Flushing all the routes :: ');
 
         controller.fakeResponse.flush();
         res.send(200, 'OK');

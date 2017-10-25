@@ -12,9 +12,9 @@ module.exports = function (server, config) {
     controllerModule.preloadRoutes(config.DEFAULT_ROUTES_PATH);
 
     var controller = controllerModule.getController();
-    server.post('/add', controller.add);
-    server.post('/remove', controller.remove); // todo: convert to delete
-    server.del('/flush', controller.flush);
+    server.post('/__add', controller.add);
+    server.del('/__remove', controller.remove);
+    server.del('/__flush', controller.flush);
     server.get(/(.*)/, controller.match);
     server.post(/(.*)/, controller.match);
 };
