@@ -10,7 +10,7 @@ var requireJsonFile = function (filePath) {
         jsonObject = JSON.parse(fs.readFileSync(filePath, "utf8"))
     } catch (err) {
         console.log("Error loading/parsing file: ");
-        console.log(err);
+        console.log(err.message);
     }
     return jsonObject;
 };
@@ -18,7 +18,9 @@ var requireJsonFile = function (filePath) {
 module.exports = function () {
     var configFilePath = path.resolve(CONFIG_FILE_PATH);
     var config = requireJsonFile(configFilePath);
-    if (!config) {
+    if (config) {
+        console.log('Loading default routes from: ', path.resolve(config.DEFAULT_ROUTES_PATH));
+    } else {
         console.log("Falling back to default configuration.");
         config = DEFAULT_CONF
     }

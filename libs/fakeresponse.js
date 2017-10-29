@@ -20,7 +20,6 @@ var FakeResponse = {
     preload: function (pathToConfiguration) {
         return when.promise(function (resolve, reject) {
             var configDir = pathToConfiguration;
-            console.log('loading default routes from: ', configDir);
             glob.sync('*.json', {cwd: configDir})
                 .forEach(function eachFile(file) {
                     var contents = fs.readFileSync(path.join(configDir, file), 'utf8');
@@ -88,7 +87,7 @@ var FakeResponse = {
         var numHeadersMatchedB = Object.keys(matchB.requiredHeaders || {}).length;
         var numHeadersMatchedA = Object.keys(matchA.requiredHeaders || {}).length;
         var headerCmp = numHeadersMatchedB - numHeadersMatchedA;
-        if(0 !== headerCmp)
+        if (0 !== headerCmp)
             return headerCmp;
 
         /*If still tied, rank on latest response*/

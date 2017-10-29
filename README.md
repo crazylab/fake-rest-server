@@ -6,7 +6,7 @@ Fake-rest-server is a generic and non-intrusive tool used to mock any http serve
 
 ### How it works
 
-The idea is to create a webserver listening in a different port and make your tests bring it up and configure how it should behave against each different request. "Configuration" can be done by posting the parameters and desired response to the server, or through configuration files inside `./default_routes/`.
+The idea is to create a webserver listening in a different port and make your tests bring it up and configure how it should behave against each different request. Server response can be configured by posting the parameters and desired response to the server, or through configuration files inside `./default_routes/`.
 
 For every request, fake-server will try to match against the configured URIs and return the expected response.
 
@@ -31,7 +31,7 @@ $ cd fake-server
 $ npm install
 $ npm start
 ```
-The server will start at `http://localhost:3012`. To configure the server, see the [Server Configuration](#server-configuration) section.
+The server will start at `http://localhost:3012`. To configure the fake-rest-server `PORT` and `DEFAULT_ROUTES_PATH`, see the [Server Configuration](#server-configuration) section.
 
 ### Quickstart (two really basic scenarios)
 Let's say you want `/test`  to always return "hello" and `/foo` to return a 404. 
@@ -73,7 +73,7 @@ now, in your browser you can see the results:
 > http://localhost:3012/test  
 
 ##### Remove Endpoint
-It is always a good practice to remove the the configured endpoint in the `teardown` method of your test.
+It is always a good practice to remove the the configured endpoint in the "teardown" part of your test.
 
 You can remove the previously added `404` example configuration by sending a `POST` request to `http://localhost:3012/__remove` with the same configuration json:
 ```json
@@ -236,5 +236,5 @@ Notice that it is same as any other configuration that we have previously seen. 
 
 
 ### Limitations
-- There are three reserved endpoints: `POST` `/__add`, `DELETE` `/__remove` and `/__flush`. These cannot be used by your application. Puting `__` before endpoint names defines these are reserved endpoint. This gives you easily use those names in your server as `/add` or `/remove` or `/flush`.
+- There are three reserved endpoints: `POST` `/__add`, `DELETE` `/__remove` and `/__flush`. These cannot be used by your application. We are considering, any endpoint starting with `__` defines reserved endpoint.
 - Does not supports `https` connections, yet.
