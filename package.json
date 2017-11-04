@@ -3,7 +3,7 @@
   "version": "0.1.6",
   "description": "Fake-REST-Server: Mock the Internet.",
   "main": "server.js",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "author": "Yahoo! and Others",
   "contributors": [
     "bigodines <matheus@yahoo-inc.com>",
