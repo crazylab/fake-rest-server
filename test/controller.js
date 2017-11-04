@@ -7,7 +7,7 @@
 /*jshint -W079 */
 'use strict';
 
-var controller = require('../routes/controllerModule').getController();
+var controller = require('../routes/controller')('./default_routes');
 var sinon = require('sinon');
 var assert = require('chai').assert;
 

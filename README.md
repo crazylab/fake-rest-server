@@ -198,7 +198,7 @@ The following will delay server response by one second:
 
 ##### Resetting server configuration
 
-To avoid the need to restart fake-server in order to clear the configuration, we've implemented a special endpoint called `/__flush`. By sending a `DELETE` request to `http://localhost:3012/__flush`, you will erase all previously configured responses.
+To avoid the need to restart fake-server in order to clear the configuration, we've implemented a special endpoint called `/__flush`. By sending a `DELETE` request to `http://localhost:3012/__flush`, you will erase all previously configured responses refreshing the default router configuration.
 
 ### Server Configuration
 The server can be configured by putting a `fake-rest-server.conf` file in the directory where the server is running. Below is a sample configuration file.
@@ -244,6 +244,6 @@ Notice that it is same as any other configuration that we have previously seen. 
 - Does not supports `https` connections, yet.
 
 ### To-Do
-- Add more tests
+- Add more unit tests and integration test
 - Support for all types of request like `DELETE`, `PUT` etc.
 - Expose API to take dump of current configuration for later reloading

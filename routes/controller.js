@@ -16,6 +16,7 @@ var merge = require('merge');
 
 var controller = {
     fakeResponse: FakeResponse, // of course this is here just so that it can be overwritten easily in the tests.
+    defaultRoutesDir: argv.defaultRoutesDir,
 
     add: function (req, res, next) {
         console.log('INFO: Adding route :: ' + req.params.route);
@@ -122,17 +123,14 @@ var controller = {
         console.log('INFO: Flushing all the routes :: ');
 
         controller.fakeResponse.flush();
+        controller.fakeResponse.preload(controller.defaultRoutesDir); // todo: Handle error
         res.send(200, 'OK');
         next();
     }
 };
 
-module.exports = {
-    preloadRoutes: function (defaultRoutesPath) {
-        FakeResponse.preload(argv.defaultRoutesDir || defaultRoutesPath);
-    },
-
-    getController: function () {
-        return controller;
-    }
+module.exports = function (defaultRoutesPath) {
+    controller.defaultRoutesDir = argv.defaultRoutesDir || defaultRoutesPath;
+    FakeResponse.preload(controller.defaultRoutesDir);
+    return controller;
 };
