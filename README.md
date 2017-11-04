@@ -15,6 +15,10 @@ For every request, fake-server will try to match against the configured URIs and
 - No need to instrument your code (as long as the external server endpoint is configurable :P)
 - Generic enough to work with blackbox or whitebox tests.
 - No database required
+#### Requirement
+> node >= 0.10.x
+
+> npm >= 1.4.x
 
 ### Installation
 `fake-rest-server` is available on [npm](https://www.npmjs.com/package/fake-rest-server)
@@ -236,5 +240,10 @@ Notice that it is same as any other configuration that we have previously seen. 
 
 
 ### Limitations
-- There are three reserved endpoints: `POST` `/__add`, `DELETE` `/__remove` and `/__flush`. These cannot be used by your application. We are considering, any endpoint starting with `__` defines reserved endpoint.
+- There are three reserved endpoints: `POST` `/__add`, `DELETE` `/__remove` and `/__flush`. These cannot be used by your application. We are considering, any endpoint starting with `__` will be reserved and will be used for further extention of this tool.
 - Does not supports `https` connections, yet.
+
+### To-Do
+- Add more tests
+- Support for all types of request like `DELETE`, `PUT` etc.
+- Expose API to take dump of current configuration for later reloading
