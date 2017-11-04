@@ -4,7 +4,6 @@
  * See the accompanying LICENSE file for terms.
  */
 
-'use strict';
 var path = require('path');
 var argv = require('yargs').argv;
 var restify = require('restify');
