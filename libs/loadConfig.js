@@ -9,20 +9,22 @@ var requireJsonFile = function (filePath) {
     try {
         jsonObject = JSON.parse(fs.readFileSync(filePath, "utf8"))
     } catch (err) {
-        console.log("Error loading/parsing file: ");
         console.log(err.message);
+        return false;
     }
     return jsonObject;
 };
 
 module.exports = function () {
-    var configFilePath = path.resolve(CONFIG_FILE_PATH);
-    var config = requireJsonFile(configFilePath);
+    var config = requireJsonFile(path.resolve(CONFIG_FILE_PATH));
     if (config) {
         console.log('Loading default routes from: ', path.resolve(config.DEFAULT_ROUTES_PATH));
+        config['PORT'] = config['PORT'] || DEFAULT_CONF.PORT;
+        config['DEFAULT_ROUTES_PATH'] = config['DEFAULT_ROUTES_PATH'] || DEFAULT_CONF.DEFAULT_ROUTES_PATH;
+        config['LOG_DIR'] = config['LOG_DIR'] || DEFAULT_CONF.LOG_DIR;
     } else {
         console.log("Falling back to default configuration.");
-        config = DEFAULT_CONF
+        config = DEFAULT_CONF;
     }
     return config;
 };

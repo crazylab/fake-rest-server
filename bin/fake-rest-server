@@ -4,12 +4,78 @@
 
 var spawn = require('child_process').spawn;
 var path = require('path');
-var args = [path.join(__dirname, '../server.js')];
-
 var fs = require('fs');
-var out = fs.openSync('./fake-rest-server.log', 'a');
-var err = fs.openSync('./fake-rest-server.log', 'a');
 
-var proc = spawn(process.execPath, args, {stdio: [ 'ignore', out, err ], detached: true,});
-proc.unref();
+var args = [path.join(__dirname, '../server.js')];
+var pidFilePath = require('os').homedir() + '/.fake-rest-server.pid';
 
+var start = function (message) {
+    var LOG_DIR = path.resolve(require('../libs/loadConfig')().LOG_DIR);
+    if (!fs.existsSync(LOG_DIR)) {
+        fs.mkdirSync(LOG_DIR);
+    }
+    var out = fs.openSync(LOG_DIR + '/fake-rest-server.log', 'a');
+    var err = fs.openSync(LOG_DIR + '/fake-rest-server.log', 'a');
+
+    var proc = spawn(process.execPath, args, {stdio: ['ignore', out, err], detached: true});
+    if (proc.pid) {
+        fs.writeFile(
+            pidFilePath,
+            proc.pid.toString(),
+            function (err) {
+                if (err) {
+                    console.error('Error occurred while writing pid file. Terminating server.');
+                    console.error(err);
+                    process.kill(-proc.pid, 'SIGINT');
+                } else {
+                    console.log(message);
+                }
+            }
+        );
+        proc.unref();
+    }
+    proc.on("error", function (err) {
+        console.error(err);
+    });
+};
+
+var stop = function () {
+    try {
+        var runningPid = +fs.readFileSync(pidFilePath, {encoding: 'utf-8'});
+    } catch (err) {
+        if ('ENOENT' === err.code)
+            console.error(pidFilePath + ' not found. It is most likely you have not started the server yet.');
+        else
+            console.error(err);
+        process.exit(1);
+    }
+
+    try {
+        if (process.kill(-runningPid, 'SIGINT')) {
+            console.log('Terminated fake-rest-server.');
+            fs.unlink(pidFilePath, function (err) {
+                if (err) {
+                    console.error('Error while removing pid file from ' + pidFilePath);
+                    console.error(err);
+                }
+            });
+        }
+    } catch (err) {
+        if ('ESRCH' === err.code)
+            console.error(pidFilePath + ' file has become outdated. Please delete the file manually.')
+    }
+};
+
+switch (process.argv[2]) {
+    case '--start':
+        start('Starting fake-rest-server..\nRefer to the logs folder for server logs.');
+        break;
+    case '--stop':
+        stop();
+        break;
+    default:
+        console.log("Usage: fake-rest-server [options]\n");
+        console.log("Options:\n");
+        console.log("--start\t\t\tstarts server in background.");
+        console.log("--stop\t\t\tstops server which has been started using --start option.");
+}

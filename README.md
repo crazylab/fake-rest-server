@@ -24,8 +24,8 @@ For every request, fake-server will try to match against the configured URIs and
 `fake-rest-server` is available on [npm](https://www.npmjs.com/package/fake-rest-server)
 
 ```shell
-$ npm install fake-rest-server -g
-$ fake-rest-server
+$ [sudo] npm install fake-rest-server -g
+$ fake-rest-server --start
 ```
 
 or
@@ -205,12 +205,15 @@ The server can be configured by putting a `fake-rest-server.conf` file in the di
 ```json
 {
   "PORT": 3000,
-  "DEFAULT_ROUTES_PATH": "./default_routes"
+  "DEFAULT_ROUTES_PATH": "./default_routes",
+  "LOG_DIR": "./logs"
 }
 ```
 The `PORT` specifies the server port at which it should listen, in this case `3000`.
 
 `DEFAULT_ROUTES_PATH` specifies the folder path from where the server should load the routes that will be available on server start. Notice that `DEFAULT_ROUTES_PATH` is a directory. All the `.json` files inside this directory will get automatically loaded when `fake-rest-server` starts and will be ready for use.
+
+`LOG_DIR` specifies directory path where the server logs will be stored when server is started using `--start` option.
 
 Below is a sample `default_routes.json` file.
 ```json
