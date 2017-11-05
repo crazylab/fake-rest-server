@@ -218,12 +218,8 @@ The server can be configured by putting a `fake-rest-server.conf` file in the di
   "LOG_DIR": "./logs"
 }
 ```
-The `PORT` specifies the server port at which it should listen, in this case `3000`.
-
-`DEFAULT_ROUTES_PATH` specifies the folder path from where the server should load the routes that will be available on server start. Notice that `DEFAULT_ROUTES_PATH` is a directory. All the `.json` files inside this directory will get automatically loaded when `fake-rest-server` starts and will be ready for use.
-
-`LOG_DIR` specifies directory path where the server logs will be stored when server is started using `--start` option.
-
+- `PORT` specifies the server port, in this case `3000`.
+- `DEFAULT_ROUTES_PATH` the server will load all the `.json` files from this directory to pre-configure itself with the specified routes on server start.
 Below is a sample `default_routes.json` file.
 ```json
 {
@@ -249,6 +245,7 @@ Below is a sample `default_routes.json` file.
 }
 ```
 Notice that it is same as any other configuration that we have previously seen. Just that this one is a array of such configuration.
+- `LOG_DIR` specifies directory path where the server logs will be stored when it is started in background using `--start` option.
 
 
 ### Limitations
