@@ -66,12 +66,34 @@ var stop = function () {
     }
 };
 
+var startInForeground = function () {
+    var proc = spawn(process.execPath, args, {stdio: 'inherit'});
+    proc.on('exit', function (code, signal) {
+        process.on('exit', function () {
+            if (signal) {
+                process.kill(process.pid, signal);
+            } else {
+                process.exit(code);
+            }
+        });
+    });
+
+// terminate children.
+    process.on('SIGINT', function () {
+        proc.kill('SIGINT'); // calls runner.abort()
+        proc.kill('SIGTERM'); // if that didn't work, we're probably in an infinite loop, so make it die.
+    });
+};
+
 switch (process.argv[2]) {
     case '--start':
         start('Starting fake-rest-server..\nRefer to the logs folder for server logs.');
         break;
     case '--stop':
         stop();
+        break;
+    case undefined:
+        startInForeground();
         break;
     default:
         console.log("Usage: fake-rest-server [options]\n");

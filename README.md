@@ -25,7 +25,7 @@ For every request, fake-server will try to match against the configured URIs and
 
 ```shell
 $ [sudo] npm install fake-rest-server -g
-$ fake-rest-server --start
+$ fake-rest-server
 ```
 
 or
@@ -37,6 +37,15 @@ $ npm start
 ```
 The server will start at `http://localhost:3012`. To configure the fake-rest-server `PORT` and `DEFAULT_ROUTES_PATH`, see the [Server Configuration](#server-configuration) section.
 
+### Command Line Options
+Fake server can be started as a background process using the following command
+```shell
+$ fake-rest-server --start
+```
+To stop the server started using the above command run
+```shell
+$ fake-rest-server --stop
+```
 ### Quickstart (two really basic scenarios)
 Let's say you want `/test`  to always return "hello" and `/foo` to return a 404. 
 
