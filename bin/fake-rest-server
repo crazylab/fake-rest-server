@@ -6,19 +6,10 @@ var spawn = require('child_process').spawn;
 var path = require('path');
 var args = [path.join(__dirname, '../server.js')];
 
-var proc = spawn(process.execPath, args, {stdio: 'inherit'});
-proc.on('exit', function (code, signal) {
-    process.on('exit', function () {
-        if (signal) {
-            process.kill(process.pid, signal);
-        } else {
-            process.exit(code);
-        }
-    });
-});
+var fs = require('fs');
+var out = fs.openSync('./fake-rest-server.log', 'a');
+var err = fs.openSync('./fake-rest-server.log', 'a');
 
-// terminate children.
-process.on('SIGINT', function () {
-    proc.kill('SIGINT'); // calls runner.abort()
-    proc.kill('SIGTERM'); // if that didn't work, we're probably in an infinite loop, so make it die.
-});
+var proc = spawn(process.execPath, args, {stdio: [ 'ignore', out, err ], detached: true,});
+proc.unref();
+
