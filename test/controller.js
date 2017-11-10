@@ -278,6 +278,29 @@ describe('Integration tests', function () {
         assert.isTrue(res.end.calledOnce);
     });
 
+    it('should respond with error message when responseData is empty string', function () {
+        var req = {
+            params: {
+                route: '/foo/bar',
+                responseCode: '404',
+                responseData: ''
+            }
+        };
+        var res = {
+            send: sinon.stub()
+        };
+
+        sinon.stub(controller.fakeResponse, 'add');
+
+        controller.add(req, res, function () {
+        });
+
+        assert.isFalse(controller.fakeResponse.add.calledOnce);
+        assert.isTrue(res.send.calledWith(204, 'responseData can not be an empty string.'));
+
+        controller.fakeResponse.add.restore();
+    });
+
     it('should work with POST requests', function () {
         var next = sinon.stub(),
             obj = {

@@ -48,6 +48,7 @@ ResponseDesc.prototype = {
     },
 
     sendResponseData: function (relativeFilePath) {
+        if(relativeFilePath == '') throw new Error('responseData can not be an empty string.');
         setValueIfDefined(this, 'responseData', relativeFilePath);
         return this;
     },

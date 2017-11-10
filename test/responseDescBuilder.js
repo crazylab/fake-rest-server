@@ -123,6 +123,13 @@ describe('ResponseDescBuilder Test', function () {
 
             assert.equal(fakeResponseDesc.responseData, undefined)
         });
+
+        it('should throw error when responseData is empty string', function () {
+            var responseData = '';
+            var fakeResponseDesc = new ResponseDescBuilder('/foo/bar');
+
+            assert.throws(function(){fakeResponseDesc.sendResponseData(responseData)}, 'responseData can not be an empty string');
+        })
     });
 
     describe('sendResponseHeaders(headers)', function () {

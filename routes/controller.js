@@ -20,21 +20,24 @@ var controller = {
 
     add: function (req, res, next) {
         console.log('INFO: Adding route :: ' + req.params.route);
+        try {
+            var responseDesc = new ResponseDescBuilder(req.params.route)
+                .withQueryParams(req.params.queryParams)
+                .withHeaders(req.params.requiredHeaders)
+                .withPayload(req.params.payload)
+                .sendResponseBody(req.params.responseBody)
+                .sendResponseData(req.params.responseData)
+                .sendResponseCode(req.params.responseCode)
+                .sendResponseHeaders(req.params.responseHeaders)
+                .delayResponseBy(req.params.delay)
+                .respondAtCall(req.params.at);
 
-        var responseDesc = new ResponseDescBuilder(req.params.route)
-            .withQueryParams(req.params.queryParams)
-            .withHeaders(req.params.requiredHeaders)
-            .withPayload(req.params.payload)
-            .sendResponseBody(req.params.responseBody)
-            .sendResponseData(req.params.responseData)
-            .sendResponseCode(req.params.responseCode)
-            .sendResponseHeaders(req.params.responseHeaders)
-            .delayResponseBy(req.params.delay)
-            .respondAtCall(req.params.at);
+            controller.fakeResponse.add(responseDesc);
 
-        controller.fakeResponse.add(responseDesc);
-
-        res.send(200, 'OK');
+            res.send(200, 'OK');
+        } catch (error) {
+            res.send(204, error.message);
+        }
         next();
     },
 
