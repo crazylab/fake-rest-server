@@ -1,6 +1,6 @@
 {
   "name": "fake-rest-server",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Fake-REST-Server: Mock the Internet.",
   "main": "server.js",
   "license": "BSD-3-Clause",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:crazylab/fake-server.git"
+    "url": "git@github.com:crazylab/fake-rest-server.git"
   },
   "readmeFilename": "README.md",
   "devDependencies": {
