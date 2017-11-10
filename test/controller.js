@@ -247,6 +247,37 @@ describe('Integration tests', function () {
         assert.isTrue(res.end.calledOnce);
     });
 
+    it('Should respond with empty text when response is set to return empty string', function () {
+        var next = sinon.stub(),
+            obj = {
+                route: '/abc',
+                responseCode: 200,
+                responseBody: ''
+            },
+            req = {
+                params: {
+                    route: '/abc',
+                }
+            },
+            res = {
+                send: sinon.stub(),
+                write: sinon.stub(),
+                writeHead: sinon.stub(),
+                end: sinon.stub()
+            };
+
+        controller.fakeResponse.add(obj);
+
+        controller.match({
+            url: '/abc',
+        }, res, next);
+
+
+        assert.isTrue(res.writeHead.calledWithExactly(200, {"Content-Type": "text/html", 'Content-Length': 0}));
+        assert.isTrue(res.write.calledWithExactly(''));
+        assert.isTrue(res.end.calledOnce);
+    });
+
     it('should work with POST requests', function () {
         var next = sinon.stub(),
             obj = {

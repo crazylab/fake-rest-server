@@ -68,7 +68,6 @@ var controller = {
         if (bestMatch) {
             var sendBestMatchResponse = function () {
                 if (bestMatch.responseData) {
-
                     fs.readFile(path.join(bestMatch.responseData), 'utf8', function (err, data) {
                         if (err) {
                             res.send(500, "Error reading file at " + path.resolve(bestMatch.responseData));
@@ -80,7 +79,7 @@ var controller = {
                         }
                         send(parseInt(bestMatch.responseCode, 10), bestMatch.responseHeaders, data);
                     });
-                } else if (bestMatch.responseBody) {
+                } else if (bestMatch.responseBody == '' || bestMatch.responseBody) {
                     send(parseInt(bestMatch.responseCode, 10), bestMatch.responseHeaders, bestMatch.responseBody);
                 } else {
                     next();
