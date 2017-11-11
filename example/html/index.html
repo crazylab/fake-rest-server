@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<link lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example</title>
+    <style>
+        #message {
+            height: 35rem;
+            width: 74rem;
+            background-color: #1dbf9f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1 align="center">Example</h1>
+    <hr>
+</header>
+<div id="message">
+    <h2 style="color: white; font-family: monospace"></h2>
+</div>
+<footer></footer>
+</body>
+<script>
+    window.onload = function () {
+        var message_container = document.querySelector('#message > h2');
+        var xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            message_container.innerText = xhttp.responseText;
+        };
+
+        xhttp.open('GET', '/api/message');
+        xhttp.send();
+    }
+</script>
+</html>
