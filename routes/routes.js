@@ -14,4 +14,6 @@ module.exports = function (server, config) {
     server.del('/__flush', controller.flush);
     server.get(/(.*)/, controller.match);
     server.post(/(.*)/, controller.match);
+    server.del(/(.*)/, controller.match);
+    server.patch(/(.*)/, controller.match);
 };
