@@ -1,6 +1,6 @@
 {
   "name": "fake-rest-server",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Fake-REST-Server: Mock the Internet.",
   "main": "server.js",
   "license": "BSD-3-Clause",

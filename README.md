@@ -254,5 +254,5 @@ Notice that it is same as any other configuration that we have previously seen. 
 
 ### To-Do
 - Add more unit tests and integration test
-- Support for all types of request like `DELETE`, `PUT` etc.
+- Support for all types of request like `PUT` etc.
 - Expose API to take dump of current configuration for later reloading
