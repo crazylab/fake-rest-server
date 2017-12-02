@@ -9,7 +9,7 @@ app.get('/', function (req, res) {
     res.sendFile('index.html', {'root': './html/'});
 });
 
-app.get('/api/*', function (req, res) {
+app.all('/api/*', function (req, res) {
     backendClient(req.url, function (body, res, err) {
         if (err) {
             res.send('Error while sending request to backend server: ', err.message);
