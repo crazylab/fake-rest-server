@@ -88,7 +88,7 @@ now, in your browser you can see the results:
 ##### Remove Endpoint
 It is always a good practice to remove the the configured endpoint in the "teardown" part of your test.
 
-You can remove the previously added `404` example configuration by sending a `POST` request to `http://localhost:3012/__remove` with the same configuration json:
+You can remove the previously added `404` example configuration by sending a `DELETE` request to `http://localhost:3012/__remove` with the same configuration json:
 ```json
  {
    "route": "/foo",
